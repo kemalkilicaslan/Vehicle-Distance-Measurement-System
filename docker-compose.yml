@@ -1,0 +1,16 @@
+services:
+  vehicle-distance:
+    build: .
+    image: vehicle-distance-measurement:latest
+    container_name: vehicle-distance-measurement
+    volumes:
+      - ./:/app                  # input video, config and outputs shared with host
+      - torch-cache:/root/.cache # cache downloaded YOLO / torch weights between runs
+    # cv2.imshow window only works on Linux + X11. Leave disabled on macOS/Windows;
+    # the script still writes the annotated output video to the project folder.
+    # environment:
+    #   - DISPLAY=${DISPLAY}
+    # Add "- /tmp/.X11-unix:/tmp/.X11-unix" to the volumes above to enable X11.
+
+volumes:
+  torch-cache:
